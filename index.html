@@ -10,39 +10,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.0"></script>
 </head>
 <body>
-    <h1>Data Visualization Dashboard</h1>
+    <div class="container">
+        <h1 class="my-4">Data Visualization Dashboard</h1>
 
-    <!-- Instructions for File Upload -->
-    <div class="alert alert-info" role="alert">
-        <strong>Instructions:</strong> Upload a CSV file with two columns: the first for categories and the second for values. 
-        Example:
-        <pre>
-        Category 1,10
-        Category 2,20
-        Category 3,30
-        </pre>
+        <!-- Instructions for File Upload -->
+        <div class="alert alert-info" role="alert">
+            <strong>Instructions:</strong> Upload a CSV file with two columns: the first for categories and the second for values. 
+            Example:
+            <pre>
+            Category 1,10
+            Category 2,20
+            Category 3,30
+            </pre>
+        </div>
+
+	<!-- File Upload for Custom Data -->
+	<h2>Upload Your Data (CSV)</h2>
+	<label for="fileInput" class="btn btn-primary btn-lg">
+    	Upload CSV File
+    	<input type="file" id="fileInput" accept=".csv" class="d-none">
+	</label>
+	<span id="fileName" class="ml-2"></span> <!-- Display file name -->
+	<br></br>
+	<button id="resetZoom" class="btn btn-danger btn-lg mt-2">Reset Zoom</button> <!-- Button to reset zoom -->
+
+
+
+        <!-- Loading Spinner -->
+        <div class="spinner" id="loadingSpinner"></div>
+
+        <!-- Bar Chart -->
+        <h2>Bar Chart</h2>
+        <div class="scroll-container">
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- Line Chart -->
+        <h2>Line Chart</h2>
+        <div class="scroll-container">
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <!-- Pie Chart -->
+        <h2>Pie Chart</h2>
+        <canvas id="pieChart"></canvas>
     </div>
-
-    <!-- File Upload for Custom Data -->
-    <h2>Upload Your Data (CSV)</h2>
-    <input type="file" id="fileInput" accept=".csv" class="form-control">
-    <button id="resetZoom" class="btn btn-secondary mt-2">Reset Zoom</button>
-
-    <!-- Bar Chart -->
-    <h2>Bar Chart</h2>
-    <div class="scroll-container">
-        <canvas id="barChart"></canvas>
-    </div>
-
-    <!-- Line Chart -->
-    <h2>Line Chart</h2>
-    <div class="scroll-container">
-        <canvas id="lineChart"></canvas>
-    </div>
-
-    <!-- Pie Chart -->
-    <h2>Pie Chart</h2>
-    <canvas id="pieChart"></canvas>
 
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
