@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Visualization Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Load Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Load Chart.js from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Load chartjs-plugin-zoom from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.0"></script>
-
 </head>
 <body>
     <h1>Data Visualization Dashboard</h1>
 
+    <!-- Instructions for File Upload -->
+    <div class="alert alert-info" role="alert">
+        <strong>Instructions:</strong> Upload a CSV file with two columns: the first for categories and the second for values. 
+        Example:
+        <pre>
+        Category 1,10
+        Category 2,20
+        Category 3,30
+        </pre>
+    </div>
+
     <!-- File Upload for Custom Data -->
     <h2>Upload Your Data (CSV)</h2>
-    <input type="file" id="fileInput" accept=".csv">
-<button id="resetZoom">Reset Zoom</button>
+    <input type="file" id="fileInput" accept=".csv" class="form-control">
+    <button id="resetZoom" class="btn btn-secondary mt-2">Reset Zoom</button>
 
     <!-- Bar Chart -->
     <h2>Bar Chart</h2>
-<div class="scroll-container">
-    <canvas id="barChart"></canvas>
-</div>
+    <div class="scroll-container">
+        <canvas id="barChart"></canvas>
+    </div>
 
     <!-- Line Chart -->
     <h2>Line Chart</h2>
-<div class="scroll-container">
-    <canvas id="lineChart"></canvas>
-</div>
+    <div class="scroll-container">
+        <canvas id="lineChart"></canvas>
+    </div>
 
     <!-- Pie Chart -->
     <h2>Pie Chart</h2>
     <canvas id="pieChart"></canvas>
 
-    <!-- JavaScript File -->
     <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

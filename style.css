@@ -13,14 +13,16 @@ h1, h2 {
 
 /* Centering the charts */
 canvas {
-    max-width: 600px;
+    max-width: 100%;  /* Allow the canvas to resize responsively */
+    height: auto;     /* Maintain aspect ratio */
     margin: 20px auto;
     display: block;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Margin adjustments */
 h2 {
-    margin-top: 50px;
+    margin-top: 30px; /* Reduced margin for a tighter layout */
 }
 
 /* Style for file upload input */
@@ -29,15 +31,38 @@ input[type="file"] {
     display: block;
 }
 
-/* Scrollable container for bar chart */
+/* Button styling */
+.btn {
+    margin-top: 10px; /* Space between buttons */
+}
+
+/* Scrollable container for charts */
 .scroll-container {
     width: 100%;
-    max-width: 600px;  /* Set max width for desktop view */
-    overflow-x: scroll; /* Enable horizontal scrolling */
+    max-width: 100%;  /* Allow full width for responsiveness */
+    overflow-x: auto; /* Enable horizontal scrolling */
     margin: 20px auto;
 }
 
 .scroll-container canvas {
-    min-width: 800px;  /* Ensure canvas is wider to show scrolling */
+    min-width: 800px;  /* Ensure canvas is wide enough to show scrolling */
 }
 
+/* Additional styles for better aesthetics */
+.container {
+    border-radius: 8px;  /* Rounded corners for the container */
+    background-color: #ffffff; /* White background for the content area */
+    padding: 20px; /* Padding inside the container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .scroll-container {
+        margin: 10px 0; /* Less margin on smaller screens */
+    }
+
+    h2 {
+        margin-top: 20px; /* Reduce margin for smaller screens */
+    }
+}
