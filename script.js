@@ -5,21 +5,8 @@ function parseCSV(file) {
         reader.onload = (event) => {
             const text = event.target.result;
             const rows = text.split('\n').map(row => row.split(','));
-            
-            // Validate CSV rows
-            if (rows.length < 2 || rows[0].length < 2) {
-                reject("Invalid CSV format. Please ensure there are at least two rows and two columns.");
-                return;
-            }
-            
-            const labels = rows.map(row => row[0].trim()).filter(label => label); // Trim whitespace and filter out empty labels
-            const data = rows.map(row => parseFloat(row[1])).filter(value => !isNaN(value)); // Filter out invalid numbers
-
-            if (labels.length === 0 || data.length === 0) {
-                reject("No valid data found. Please ensure your CSV has correct values.");
-                return;
-            }
-            
+            const labels = rows.map(row => row[0]);
+            const data = rows.map(row => parseFloat(row[1]));
             resolve({ labels, data });
         };
         reader.onerror = reject;
@@ -29,16 +16,6 @@ function parseCSV(file) {
 
 // Variables to store chart instances
 let barChart, lineChart;
-
-// Function to reset zoom
-function resetZoom() {
-    if (barChart) {
-        barChart.resetZoom();
-    }
-    if (lineChart) {
-        lineChart.resetZoom();
-    }
-}
 
 // Function to create the charts
 async function createCharts() {
@@ -50,14 +27,14 @@ async function createCharts() {
         return;
     }
 
-    const { labels, data } = await parseCSV(file);
+    // Display the file name
+    document.getElementById('fileName').textContent = `File: ${file.name}`;
 
-    // Destroy previous charts if they exist
-    if (barChart) barChart.destroy();
-    if (lineChart) lineChart.destroy();
+    const { labels, data } = await parseCSV(file);
 
     // Bar Chart
     const barCtx = document.getElementById('barChart').getContext('2d');
+    if (barChart) barChart.destroy();  // Destroy previous chart instance
     barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
@@ -80,16 +57,16 @@ async function createCharts() {
                 zoom: {
                     zoom: {
                         wheel: {
-                            enabled: true // Enable zooming with mouse wheel
+                            enabled: true
                         },
                         pinch: {
-                            enabled: true // Enable zooming with pinch gestures
+                            enabled: true
                         },
-                        mode: 'xy' // Allow zooming on both axes
+                        mode: 'xy'
                     },
                     pan: {
                         enabled: true,
-                        mode: 'xy' // Allow panning on both axes
+                        mode: 'xy'
                     }
                 }
             }
@@ -98,6 +75,7 @@ async function createCharts() {
 
     // Line Chart
     const lineCtx = document.getElementById('lineChart').getContext('2d');
+    if (lineChart) lineChart.destroy();  // Destroy previous chart instance
     lineChart = new Chart(lineCtx, {
         type: 'line',
         data: {
@@ -120,16 +98,16 @@ async function createCharts() {
                 zoom: {
                     zoom: {
                         wheel: {
-                            enabled: true // Enable zooming with mouse wheel
+                            enabled: true
                         },
                         pinch: {
-                            enabled: true // Enable zooming with pinch gestures
+                            enabled: true
                         },
-                        mode: 'xy' // Allow zooming on both axes
+                        mode: 'xy'
                     },
                     pan: {
                         enabled: true,
-                        mode: 'xy' // Allow panning on both axes
+                        mode: 'xy'
                     }
                 }
             }
@@ -138,7 +116,7 @@ async function createCharts() {
 
     // Pie Chart
     const pieCtx = document.getElementById('pieChart').getContext('2d');
-    new Chart(pieCtx, {
+    const pieChart = new Chart(pieCtx, {
         type: 'pie',
         data: {
             labels: labels,
@@ -177,20 +155,20 @@ async function createCharts() {
     });
 }
 
-// Event listener for file upload
-document.getElementById('fileInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-        document.getElementById('fileName').textContent = file.name; // Display the file name
-    } else {
-        document.getElementById('fileName').textContent = ''; // Clear if no file selected
+// Function to reset zoom
+function resetZoom() {
+    if (barChart) {
+        barChart.resetZoom();
     }
-    createCharts(); // Proceed to create charts
-});
+    if (lineChart) {
+        lineChart.resetZoom();
+    }
+}
 
+// Event listener for file upload
+document.getElementById('fileInput').addEventListener('change', createCharts);
 // Event listener for reset zoom button
 document.getElementById('resetZoom').addEventListener('click', resetZoom);
-
 
 // Event listener for file upload
 document.getElementById('fileInput').addEventListener('change', function (event) {
