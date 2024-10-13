@@ -198,19 +198,10 @@ document.addEventListener('DOMContentLoaded', function () {
         lineChart.update();
 
         // Update Pie Chart
-        // For Pie Chart, we'll take the first three data points for simplicity
-        const pieLabels = data.labels.slice(0, 3);
-        const pieValues = data.values.slice(0, 3);
+    pieChart.data.labels = data.labels;
+    pieChart.data.datasets[0].data = data.values;
+    pieChart.update();
 
-        // If there are less than 3 data points, fill the rest with zeros
-        while (pieLabels.length < 3) {
-            pieLabels.push(`Category ${pieLabels.length + 1}`);
-            pieValues.push(0);
-        }
-
-        pieChart.data.labels = pieLabels;
-        pieChart.data.datasets[0].data = pieValues;
-        pieChart.update();
     }
 
     // Event listener for file upload
