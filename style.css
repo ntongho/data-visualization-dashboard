@@ -22,3 +22,9 @@ canvas {
 h2 {
     margin-top: 50px;
 }
+
+/* Style for file upload input */
+input[type="file"] {
+    margin: 20px auto;
+    display: block;
+}
