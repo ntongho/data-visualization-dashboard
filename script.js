@@ -15,11 +15,12 @@ function parseCSV(file) {
 }
 
 // Variables to store chart instances
-let barChart, lineChart;
+let barChart, lineChart, pieChart;
 
 // Function to create the charts
 async function createCharts() {
     const fileInput = document.getElementById('fileInput');
+    const fileNameDisplay = document.getElementById('fileName');
     const file = fileInput.files[0];
 
     if (!file) {
@@ -27,14 +28,13 @@ async function createCharts() {
         return;
     }
 
-    // Display the file name
-    document.getElementById('fileName').textContent = `File: ${file.name}`;
+    // Display uploaded file name
+    fileNameDisplay.textContent = `Uploaded file: ${file.name}`;
 
     const { labels, data } = await parseCSV(file);
 
     // Bar Chart
     const barCtx = document.getElementById('barChart').getContext('2d');
-    if (barChart) barChart.destroy();  // Destroy previous chart instance
     barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
@@ -75,7 +75,6 @@ async function createCharts() {
 
     // Line Chart
     const lineCtx = document.getElementById('lineChart').getContext('2d');
-    if (lineChart) lineChart.destroy();  // Destroy previous chart instance
     lineChart = new Chart(lineCtx, {
         type: 'line',
         data: {
@@ -116,7 +115,7 @@ async function createCharts() {
 
     // Pie Chart
     const pieCtx = document.getElementById('pieChart').getContext('2d');
-    const pieChart = new Chart(pieCtx, {
+    pieChart = new Chart(pieCtx, {
         type: 'pie',
         data: {
             labels: labels,
@@ -155,28 +154,56 @@ async function createCharts() {
     });
 }
 
-// Function to reset zoom
+// Function to reset zoom for all charts
 function resetZoom() {
-    if (barChart) {
-        barChart.resetZoom();
+    if (barChart) barChart.resetZoom();
+    if (lineChart) lineChart.resetZoom();
+    if (pieChart) pieChart.resetZoom();
+}
+
+// Function to export a specific chart as PNG
+function exportChartAsPNG(chart) {
+    if (chart) {
+        const link = document.createElement('a');
+        link.href = chart.toBase64Image(); // Get the image in base64 format
+        link.download = 'chart.png'; // Set the default download filename
+        document.body.appendChild(link); // Append link to the body
+        link.click(); // Trigger the download
+        document.body.removeChild(link); // Remove the link after triggering download
+    } else {
+        alert("No chart available for export.");
     }
-    if (lineChart) {
-        lineChart.resetZoom();
+}
+
+// Function to handle download action
+function handleDownload() {
+    const selectedChart = document.getElementById('chartSelect').value;
+    let chart;
+
+    // Determine which chart to use based on selection
+    switch (selectedChart) {
+        case 'bar':
+            chart = barChart;
+            break;
+        case 'line':
+            chart = lineChart;
+            break;
+        case 'pie':
+            chart = pieChart;
+            break;
+        default:
+            alert("Invalid chart selected.");
+            return;
     }
+
+    exportChartAsPNG(chart);
 }
 
 // Event listener for file upload
 document.getElementById('fileInput').addEventListener('change', createCharts);
+
 // Event listener for reset zoom button
 document.getElementById('resetZoom').addEventListener('click', resetZoom);
 
-// Event listener for file upload
-document.getElementById('fileInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-        document.getElementById('fileName').textContent = file.name; // Display the file name
-    } else {
-        document.getElementById('fileName').textContent = ''; // Clear if no file selected
-    }
-    createCharts(); // Proceed to create charts
-});
+// Event listener for download button
+document.getElementById('downloadPNG').addEventListener('click', handleDownload);

@@ -24,20 +24,16 @@
             </pre>
         </div>
 
-	<!-- File Upload for Custom Data -->
-	<h2>Upload Your Data (CSV)</h2>
-	<label for="fileInput" class="btn btn-primary btn-lg">
-    	Upload CSV File
-    	<input type="file" id="fileInput" accept=".csv" class="d-none">
-	</label>
-	<div id="fileName" class="alert alert-secondary mt-2"></div> <!-- File name display -->
-	<br></br>
-	<button id="resetZoom" class="btn btn-danger btn-lg mt-2">Reset Zoom</button> <!-- Button to reset zoom -->
+        <!-- File Upload for Custom Data -->
+        <h2>Upload Your Data (CSV)</h2>
+        <label for="fileInput" class="btn btn-primary btn-lg">
+            Upload CSV File
+            <input type="file" id="fileInput" accept=".csv" class="d-none">
+        </label>
+        <div id="fileName" class="alert alert-secondary mt-2"></div> <!-- File name display -->
 
-
-
-        <!-- Loading Spinner -->
-        <div class="spinner" id="loadingSpinner"></div>
+        <!-- Reset Zoom Button -->
+        <button id="resetZoom" class="btn btn-danger btn-lg mt-2">Reset Zoom</button>
 
         <!-- Bar Chart -->
         <h2>Bar Chart</h2>
@@ -54,6 +50,15 @@
         <!-- Pie Chart -->
         <h2>Pie Chart</h2>
         <canvas id="pieChart"></canvas>
+
+        <!-- Dropdown to select which chart to download -->
+        <h2>Select Chart to Download</h2>
+        <select id="chartSelect" class="form-control">
+            <option value="bar">Bar Chart</option>
+            <option value="line">Line Chart</option>
+            <option value="pie">Pie Chart</option>
+        </select>
+        <button id="downloadPNG" class="btn btn-primary mt-2">Download as PNG</button>
     </div>
 
     <script src="script.js"></script>
